@@ -25,4 +25,5 @@ bool PhysicsObject::collide(shared_ptr<PhysicsObject> other)
         other->velocity.y = 0;
         other->position.y = position.y + collider.bbox.max.y - other->collider.bbox.min.y;
     }
+	return false;
 }

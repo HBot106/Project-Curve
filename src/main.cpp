@@ -1,14 +1,14 @@
 /*
 CSC 476 Lab 1
 */
-
-#include <iostream>
-#include <glad/glad.h>
+#define _USE_MATH_DEFINES
 #include <cmath>
+#include <glad/glad.h>
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <iostream>
 
 #include "GLSL.h"
 #include "Program.h"
