@@ -1,0 +1,111 @@
+﻿  Building Custom Rule C:/Users/Daniel/Documents/GitKraker/CPE-476-Project-Curve/CMakeLists.txt
+  CMake does not need to re-run because C:/Users/Daniel/Documents/GitKraker/CPE-476-Project-Curve/slnStuff/CMakeFiles/generate.stamp is up-to-date.
+  glad.c
+  Camera.cpp
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Camera.cpp(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Camera.cpp(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Camera.cpp(48): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Camera.cpp(49): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Camera.cpp(50): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Camera.cpp(91): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Camera.cpp(92): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Camera.cpp(93): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  GLSL.cpp
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\GLSL.cpp(113): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h(2263): note: see declaration of 'sscanf'
+  GLTextureWriter.cpp
+c:\users\daniel\documents\gitkraker\cpe-476-project-curve\src\stb_image_write.h(223): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h(208): note: see declaration of 'fopen'
+c:\users\daniel\documents\gitkraker\cpe-476-project-curve\src\stb_image_write.h(616): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h(1774): note: see declaration of 'sprintf'
+c:\users\daniel\documents\gitkraker\cpe-476-project-curve\src\stb_image_write.h(999): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h(208): note: see declaration of 'fopen'
+  MatrixStack.cpp
+  Object3D.cpp
+  Program.cpp
+  Shape.cpp
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Shape.cpp(38): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Shape.cpp(48): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\Shape.cpp(64): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  Skybox.cpp
+  Texture.cpp
+  WindowManager.cpp
+  BoundingBox.cpp
+  Collider.cpp
+c:\users\daniel\documents\gitkraker\cpe-476-project-curve\src\engine\Raytrace.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  ColliderMesh.cpp
+  ColliderSphere.cpp
+  GameObject.cpp
+  PhysicsObject.cpp
+  Raytrace.cpp
+c:\users\daniel\documents\gitkraker\cpe-476-project-curve\src\engine\Raytrace.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Ball.cpp
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\gameobjects\Ball.cpp(28): warning C4305: '=': truncation from 'double' to 'float'
+  Box.cpp
+  Enemy.cpp
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\gameobjects\Enemy.cpp(59): warning C4305: '+=': truncation from 'double' to 'float'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\gameobjects\Enemy.cpp(63): warning C4305: '-=': truncation from 'double' to 'float'
+  Generating Code...
+  Compiling...
+  main.cpp
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(6): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(382): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(585): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(586): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(587): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(588): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(591): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(592): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(593): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(598): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(603): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(604): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(605): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(606): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(609): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(610): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(611): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(612): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(657): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\memory(1801): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\memory(1866): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<glm::vec<3,float,0>,glm::qua<float,0>,std::shared_ptr<Shape>&,int>(glm::vec<3,float,0> &&,glm::qua<float,0> &&,std::shared_ptr<Shape> &,int &&)' being compiled
+          with
+          [
+              _Ty=Ball
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\memory(1866): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<glm::vec<3,float,0>,glm::qua<float,0>,std::shared_ptr<Shape>&,int>(glm::vec<3,float,0> &&,glm::qua<float,0> &&,std::shared_ptr<Shape> &,int &&)' being compiled
+          with
+          [
+              _Ty=Ball
+          ]
+  C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\src\main.cpp(304): note: see reference to function template instantiation 'std::shared_ptr<Ball> std::make_shared<Ball,glm::vec3,glm::quat,std::shared_ptr<Shape>&,int>(glm::vec3 &&,glm::quat &&,std::shared_ptr<Shape> &,int &&)' being compiled
+  Generating Code...
+  curve.vcxproj -> C:\Users\Daniel\Documents\GitKraker\CPE-476-Project-Curve\slnStuff\Debug\curve.exe
