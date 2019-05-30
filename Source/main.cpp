@@ -505,10 +505,10 @@ public:
 
         float xval, yval, zval;
 		char objtype;
-        while (inLevel >> xval)
+        while (inLevel >> objtype)
         {
-            inLevel >> yval >> zval >> objtype;
-			if (objtype == 'b'){
+            inLevel >> xval >> yval >> zval;
+			if (objtype == 'box'){
 				auto box = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.boxModel);
 				boxes.push_back(box);
 			}
