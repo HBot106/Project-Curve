@@ -43,7 +43,7 @@
 
 // number of skin textures to load and swap through
 #define NUMBER_OF_MARBLE_SKINS 13
-#define SHADOW_QUALITY 4 // [-1, 0, 1, 2, 3, 4] (-1: default) (0: OFF);
+#define SHADOW_QUALITY 1 // [-1, 0, 1, 2, 3, 4] (-1: default) (0: OFF);
 
 #define RESOURCE_DIRECTORY string("../Resources")
 
@@ -70,7 +70,7 @@ public:
 
     // Shadow Globals
     int SHADOWS = 1;
-    int SHADOW_AA = 4;
+    int SHADOW_AA = 1;
     int DEBUG_LIGHT = 0;
     int GEOM_DEBUG = 1;
     GLuint SHADOW_SIZE = 0;
@@ -512,34 +512,37 @@ public:
 		char objtype;
         while (inLevel >> objtype)
         {
+            float scale = 5.0;
+            float zOffset = 1;
+            float xOffset = 34;
             inLevel >> xval >> yval >> zval;
 			if (objtype == 'box'){
-				auto box = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.boxModel);
+				auto box = make_shared<Box>(vec3(xval * 8, yval, zval * scale), normalize(quat(0, 0, 0, 0)), shapes.boxModel);
 				boxes.push_back(box);
 			}
 			else if (objtype == 'h') {
-				auto hexa = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.hexaModel);
-				hexa->scale = vec3(6);
+				auto hexa = make_shared<Box>(vec3((xval + xOffset) * scale, yval * scale, (zval + zOffset) * scale), normalize(quat(0, 0, 0, 0)), shapes.hexaModel);
+				hexa->scale = vec3(scale);
 				hexas.push_back(hexa);
 			}
 			else if (objtype == 'x') {
-				auto trap = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.trapModel);
-				trap->scale = vec3(6);
+				auto trap = make_shared<Box>(vec3((xval + xOffset) * scale, yval * scale, (zval + zOffset) * scale), normalize(quat(0, 0, 0, 0)), shapes.trapModel);
+				trap->scale = vec3(scale);
 				traps.push_back(trap);
 			}
 			else if (objtype == 'w') {
-				auto wide = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.wideModel);
-				wide->scale = vec3(6);
+				auto wide = make_shared<Box>(vec3((xval + xOffset) * scale, yval * scale, (zval + zOffset) * scale), normalize(quat(0, 0, 0, 0)), shapes.wideModel);
+				wide->scale = vec3(scale);
 				wides.push_back(wide);
 			}
 			if (objtype == 'm') {
-				auto medi = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.mediModel);
-				medi->scale = vec3(6);
+				auto medi = make_shared<Box>(vec3((xval + xOffset) * scale, yval * scale, (zval + zOffset) * scale), normalize(quat(0, 0, 0, 0)), shapes.mediModel);
+				medi->scale = vec3(scale);
 				medis.push_back(medi);
 			}
 			if (objtype == 't') {
-				auto thin = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.thinModel);
-				thin->scale = vec3(6);
+				auto thin = make_shared<Box>(vec3((xval + xOffset) * scale, yval * scale, (zval + zOffset) * scale), normalize(quat(0, 0, 0, 0)), shapes.thinModel);
+				thin->scale = vec3(scale);
 				thins.push_back(thin);
 			}
         }
