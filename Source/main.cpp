@@ -100,6 +100,11 @@ public:
         shared_ptr<Shape> roboLeg;
         shared_ptr<Shape> roboFoot;
         shared_ptr<Shape> boxModel;
+		shared_ptr<Shape> hexaModel;
+		shared_ptr<Shape> trapModel;
+		shared_ptr<Shape> wideModel;
+		shared_ptr<Shape> mediModel;
+		shared_ptr<Shape> thinModel;
         shared_ptr<Shape> plane;
         shared_ptr<Shape> billboard;
         shared_ptr<Shape> goalModel;
@@ -124,6 +129,11 @@ public:
         shared_ptr<Octree> octree;
     } gameObjects;
     vector<shared_ptr<PhysicsObject>> boxes;
+	vector<shared_ptr<PhysicsObject>> hexas;
+	vector<shared_ptr<PhysicsObject>> traps;
+	vector<shared_ptr<PhysicsObject>> wides;
+	vector<shared_ptr<PhysicsObject>> medis;
+	vector<shared_ptr<PhysicsObject>> thins;
 
     // BillBoard for rendering a texture to screen. (like the shadow map)
     GLuint quad_VertexArrayID;
@@ -430,6 +440,11 @@ public:
 
         loadModel(shapes.cube, "cube.obj", true);
         loadModel(shapes.boxModel, "box.obj", false, true);
+		loadModel(shapes.hexaModel, "hexa.obj", false, true);
+		loadModel(shapes.trapModel, "trap.obj", false, true);
+		loadModel(shapes.wideModel, "wide.obj", false, true);
+		loadModel(shapes.mediModel, "medi.obj", false, true);
+		loadModel(shapes.thinModel, "thin.obj", false, true);
         loadModel(shapes.plane, "plane.obj");
         loadModel(shapes.roboHead, "Robot/RobotHead.obj", true);
         loadModel(shapes.roboLeg, "Robot/RobotLeg.obj", true);
@@ -488,11 +503,34 @@ public:
         ifstream inLevel(RESOURCE_DIRECTORY + "/levels/Level1.txt");
 
         float xval, yval, zval;
+		char objtype;
         while (inLevel >> xval)
         {
-            inLevel >> yval >> zval;
-            auto box = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.boxModel);
-            boxes.push_back(box);
+            inLevel >> yval >> zval >> objtype;
+			if (objtype == 'b'){
+				auto box = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.boxModel);
+				boxes.push_back(box);
+			}
+			else if (objtype == 'h') {
+				auto hexa = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.hexaModel);
+				hexas.push_back(hexa);
+			}
+			else if (objtype == 'x') {
+				auto trap = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.trapModel);
+				traps.push_back(trap);
+			}
+			else if (objtype == 'w') {
+				auto wide = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.wideModel);
+				wides.push_back(wide);
+			}
+			if (objtype == 'm') {
+				auto medi = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.mediModel);
+				medis.push_back(medi);
+			}
+			if (objtype == 't') {
+				auto thin = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.thinModel);
+				thins.push_back(thin);
+			}
         }
     }
 
@@ -612,6 +650,26 @@ public:
         {
             box->draw(shader, M);
         }
+		for (auto box : hexas)
+		{
+			box->draw(shader, M);
+		}
+		for (auto box : wides)
+		{
+			box->draw(shader, M);
+		}
+		for (auto box : medis)
+		{
+			box->draw(shader, M);
+		}
+		for (auto box : traps)
+		{
+			box->draw(shader, M);
+		}
+		for (auto box : thins)
+		{
+			box->draw(shader, M);
+		}
 
         // Cleanup
         M->popMatrix();
