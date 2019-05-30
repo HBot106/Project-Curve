@@ -59,10 +59,10 @@ public:
     WindowManager *windowManager = nullptr;
 
     // Game Info Globals
+    bool editMode = false;
     float START_TIME = 0.0f;
     bool MOVING = false;
     bool MOUSE_DOWN = false;
-    bool SHOW_CURSOR = false;
     int SCORE = 0;
     int CURRENT_SKIN = 0;
     vec3 START_POSITION = vec3(120, 3, 7);
@@ -104,6 +104,7 @@ public:
         shared_ptr<Shape> billboard;
         shared_ptr<Shape> goalModel;
         shared_ptr<Shape> sphere;
+        shared_ptr<Shape> demoLevel;
     } shapes;
 
     // Effects
@@ -121,6 +122,7 @@ public:
         shared_ptr<Enemy> enemy2;
         shared_ptr<Goal> goal;
         shared_ptr<Box> goalObject;
+        shared_ptr<Box> demoLevelObject;
         shared_ptr<Octree> octree;
     } gameObjects;
     vector<shared_ptr<PhysicsObject>> boxes;
@@ -435,6 +437,7 @@ public:
         loadModel(shapes.roboFoot, "Robot/RobotFoot.obj", true);
         loadModel(shapes.billboard, "billboard.obj", true);
         loadModel(shapes.goalModel, "goal.obj", true);
+        loadModel(shapes.demoLevel, "Level.obj", true);
         loadModel(shapes.sphere, "quadSphere.obj", true);
     }
 
@@ -469,6 +472,10 @@ public:
         gameObjects.goalObject = make_shared<Box>(vec3(0, 11.5, 0), quat(1, 0, 0, 0), shapes.goalModel);
         gameObjects.goalObject->scale = vec3(4);
 
+        // DEMO LEVEL
+        gameObjects.demoLevelObject = make_shared<Box>(vec3(100, 0, 0), quat(1, 0, 0, 0), shapes.demoLevel);
+        gameObjects.demoLevelObject->scale = vec3(50);
+
         gameObjects.goal = make_shared<Goal>(gameObjects.goalObject->position + vec3(0, 1, 0), quat(1, 0, 0, 0), nullptr, 1);
         gameObjects.goal->init(fireworkEmitter, &START_TIME);
 
@@ -477,6 +484,7 @@ public:
         gameObjects.octree->init(shapes.billboard, shapes.cube);
         gameObjects.octree->insert(gameObjects.goal);
         gameObjects.octree->insert(gameObjects.goalObject);
+        gameObjects.octree->insert(gameObjects.demoLevelObject);
         gameObjects.octree->insert(gameObjects.ball);
         gameObjects.octree->insert(boxes);
         gameObjects.octree->insert(gameObjects.enemy1);
@@ -599,6 +607,7 @@ public:
         }
         gameObjects.ball->draw(shader, M);
         gameObjects.goalObject->draw(shader, M);
+        gameObjects.demoLevelObject->draw(shader, M);
         gameObjects.enemy1->draw(shader, M);
         gameObjects.enemy2->draw(shader, M);
 
@@ -779,6 +788,7 @@ public:
         }*/
 
         gameObjects.goalObject->update(dt);
+        gameObjects.demoLevelObject->update(dt);
         gameObjects.ball->update(dt, camera->getDolly(), camera->getStrafe());
         camera->update(dt, gameObjects.ball);
         gameObjects.goal->update(dt);
@@ -880,13 +890,10 @@ public:
         }
         else if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
         {
-            camera->flying = !camera->flying;
-
-            SHOW_CURSOR = !SHOW_CURSOR;
-            if (SHOW_CURSOR)
-                glfwSetInputMode(windowManager->getHandle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            else
-                glfwSetInputMode(windowManager->getHandle(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            editMode = !editMode;
+            camera->cameraMode = editMode ? Camera::edit : Camera::marble;
+            gameObjects.ball->frozen = editMode;
+            if (!editMode) camera->resetView();
         }
         else if (key == GLFW_KEY_U && action == GLFW_PRESS)
         {
@@ -900,14 +907,17 @@ public:
         {
             resetPlayer();
         }
-        else if (key == GLFW_KEY_C && action == GLFW_PRESS)
-        {
-            camera->previewLvl = !camera->previewLvl;
-            if (camera->previewLvl)
-            {
-                camera->startLvlPreview(CENTER_LVL_POSITION);
-            }
-        }
+        //else if (key == GLFW_KEY_C && action == GLFW_PRESS)
+        //{
+        //    if (camera->cameraMode == Camera::flythrough) {
+        //        camera->cameraMode = Camera::marble;
+        //    }
+        //    else
+        //    {
+        //        camera->cameraMode = Camera::flythrough;
+        //        camera->startLvlPreview(CENTER_LVL_POSITION);
+        //    }
+        //}
     }
 
     void scrollCallback(GLFWwindow *window, double deltaX, double deltaY)
@@ -941,11 +951,11 @@ public:
 
         if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
         {
-            camera->angleLocked = false;
+            camera->freeViewing = true;
         }
         if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
         {
-            camera->angleLocked = true;
+            camera->freeViewing = false;
         }
     }
 

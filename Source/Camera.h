@@ -8,21 +8,26 @@
 class Camera
 {
 public:
+    enum CameraMode { marble, edit, flythrough };
+
     Camera(WindowManager *windowManager, glm::vec3 centerOfLevel);
     ~Camera();
     void update(float dt, std::shared_ptr<Ball> ball);
 	void init();
 	void startLvlPreview(glm::vec3 lvlCenterPt);
+    void marbleModeUpdate(shared_ptr<Ball> ball);
+    void editModeUpdate(float dt);
+    void flythroughModeUpdate();
+    void resetView();
 	glm::vec3 getDolly();
 	glm::vec3 getStrafe();
 
-    float speed = 5;
+    float moveSpeed = 10;
 	float sprintFactor = 3;
 	float radius = 1.5;
 	float height = 5;
-    bool angleLocked = true;
-	bool flying = false;
-	bool previewLvl = false;
+    bool freeViewing = false;
+    CameraMode cameraMode = marble;
 	Pathing *cameraPath;
 	WindowManager *windowManager;
 
@@ -47,6 +52,15 @@ public:
 	double prevTime;
 	float startTimer;
 	float theta;
+
+    // Updated-per-frame data
+    int windowWidth;
+    int windowHeight;
+    double xpos;
+    double ypos;
+    double dx;
+    double dy;
+    double radPerPx;
 	
 	glm::vec3 cameraPathTarget;
 	glm::vec3 cameraStartPos;
