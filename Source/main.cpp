@@ -495,13 +495,18 @@ public:
         gameObjects.octree->insert(gameObjects.goalObject);
         gameObjects.octree->insert(gameObjects.ball);
         gameObjects.octree->insert(boxes);
+		gameObjects.octree->insert(hexas);
+		gameObjects.octree->insert(traps);
+		gameObjects.octree->insert(thins);
+		gameObjects.octree->insert(medis);
+		gameObjects.octree->insert(wides);
         gameObjects.octree->insert(gameObjects.enemy1);
         gameObjects.octree->insert(gameObjects.enemy2);
     }
 
     void loadLevel()
     {
-        ifstream inLevel(RESOURCE_DIRECTORY + "/levels/Level1.txt");
+        ifstream inLevel(RESOURCE_DIRECTORY + "/levels/Level2.txt");
 
         float xval, yval, zval;
 		char objtype;
@@ -513,23 +518,28 @@ public:
 				boxes.push_back(box);
 			}
 			else if (objtype == 'h') {
-				auto hexa = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.hexaModel);
+				auto hexa = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.hexaModel);
+				hexa->scale = vec3(6);
 				hexas.push_back(hexa);
 			}
 			else if (objtype == 'x') {
-				auto trap = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.trapModel);
+				auto trap = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.trapModel);
+				trap->scale = vec3(6);
 				traps.push_back(trap);
 			}
 			else if (objtype == 'w') {
-				auto wide = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.wideModel);
+				auto wide = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.wideModel);
+				wide->scale = vec3(6);
 				wides.push_back(wide);
 			}
 			if (objtype == 'm') {
-				auto medi = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.mediModel);
+				auto medi = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.mediModel);
+				medi->scale = vec3(6);
 				medis.push_back(medi);
 			}
 			if (objtype == 't') {
-				auto thin = make_shared<Box>(vec3(xval * 8, yval, zval * 6), normalize(quat(0, 0, 0, 0)), shapes.thinModel);
+				auto thin = make_shared<Box>(vec3(xval * 8 + 190, yval, zval * 6 + 10), normalize(quat(0, 0, 0, 0)), shapes.thinModel);
+				thin->scale = vec3(6);
 				thins.push_back(thin);
 			}
         }
