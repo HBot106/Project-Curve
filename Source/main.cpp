@@ -211,13 +211,13 @@ public:
         initShader(
             programs.circle,
             "circle",
-            {"vertPos"},
+            {"vertPos", "vertNor", "vertTex"},
             {"P", "V", "M", "radius"});
 
         initShader(
             programs.cubeOutline,
             "cube_outline",
-            {"vertPos"},
+            {"vertPos", "vertNor", "vertTex"},
             {"P", "V", "M", "edge"});
 
         initShader(

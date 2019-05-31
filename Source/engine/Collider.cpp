@@ -63,7 +63,7 @@ void checkSphereMesh(PhysicsObject *sphere, ColliderSphere *sphereCol, PhysicsOb
     unordered_set<vec3> vertSet;
 
     // Check bounding spheres
-    if (distance2(sphere->position, mesh->position) <= pow(sphere->getRadius() + mesh->getRadius(), 2))
+    if (distance2(sphere->getCenterPos(), mesh->getCenterPos()) <= pow(sphere->getRadius() + mesh->getRadius(), 2))
     {
         // Check faces
         for (int i = 0; i < meshCol->mesh->getNumFaces(); i++)
