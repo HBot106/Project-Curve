@@ -174,7 +174,7 @@ vector<shared_ptr<PhysicsObject>> Octree::query(shared_ptr<PhysicsObject> object
     vector<shared_ptr<PhysicsObject>> hits;
     stack<shared_ptr<OctNode>> nodes;
 
-    if (root != nullptr && boxContainsSphere(root->imin, root->imax, object->getCenterPos(), object->getRadius()))
+    if (root != nullptr)
     {
         nodes.push(root);
     }
