@@ -38,6 +38,7 @@
 #include "engine/Octree.h"
 #include "engine/Frustum.h"
 #include "engine/ParticleEmitter.h"
+#include "engine/UIObject.h"
 #include "engine/Prefab.h"
 #include "engine/SceneManager.h"
 #include "engine/ModelManager.h"
@@ -100,6 +101,13 @@ public:
         shared_ptr<PowerUp> powerUp2;
     } gameObjects;
 
+	struct
+	{
+		shared_ptr<UIObject> logo;
+		shared_ptr<UIObject> winMessage;
+		shared_ptr<UIObject> dummy;
+	} uiObjects;
+
     // Billboard for rendering a texture to screen (like the shadow map)
     GLuint fboQuadVertexArrayID;
     GLuint fboQuadVertexBuffer;
@@ -151,6 +159,7 @@ public:
         shaderManager.get("pass", {"vertPos"}, {"texBuf"});
         shaderManager.get("depth_debug", {"vertPos"}, {"LP", "LV", "M"});
         shaderManager.get("particle", {"vertPos", "vertTex"}, {"P", "V", "M", "pColor", "alphaTexture"});
+		shaderManager.get("ui", { "vertPos", "vertTex" }, {"M"});
     }
 
     void loadMaterials()
@@ -173,6 +182,7 @@ public:
     void loadParticleTextures()
     {
         textureManager.get("particles/star_07.png", 1);
+        textureManager.get("particles/scorch_02.png", 1);
         textureManager.get("particles/scorch_02.png", 1);
     }
 
@@ -301,6 +311,13 @@ public:
         sceneManager.octree.init(modelManager.get("billboard.obj"), modelManager.get("cube.obj"));
     }
 
+	void loadUIObjects() {
+		uiObjects.logo = make_shared<UIObject>(vec3(-0.78f, 0.78f, 0), vec3(0.4f, 0.4f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("/ui/Level1.png", 1));
+		//uiObjects.winMessage = make_shared<UIObject>(vec3(0.0f, 0.0f, 0), vec3(0.8f, 0.4f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("/ui/YouWin.png", 0));
+		//uiObjects.dummy = make_shared<UIObject>(vec3(0.0f, 0.0f, 0), vec3(0.8f, 0.4f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), RESOURCE_DIRECTORY + "/textures/ui/books.png");
+		//UIObject r = UIObject(vec3(1.0f, 1.0f, 1.0f), vec3(0.2f), quat(0.0f, 0.0f, 0.0f, 0.0f), modelManager.get("billboard.obj"), RESOURCE_DIRECTORY + "/textures/ui/Level1.png");
+	}
+
     /*
      * Rendering
      */
@@ -319,7 +336,12 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         if (debugLight) drawDepthMap();
-        else renderPlayerView(&LS);
+        else renderPlayerView(&LS); 
+		auto M = make_shared<MatrixStack>();
+		uiObjects.logo->draw(shaderManager.get("ui"), M);
+		if (gameObjects.goal->didWin) {
+			//uiObjects.winMessage->draw(shaderManager.get("ui"), M);
+		}
     }
 
     void drawScene(shared_ptr<Program> shader)
@@ -752,6 +774,7 @@ int main(int argc, char **argv)
     application->loadModels();
     application->loadLevel();
     application->loadGameObjects();
+	application->loadUIObjects();
     application->loadSounds();
 
     application->startTime = glfwGetTime();
