@@ -40,7 +40,7 @@ bool WindowManager::init(int const width, int const height, bool maximized, bool
 	if (maximized) glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
 	// Create a windowed mode window and its OpenGL context.
-	windowHandle = glfwCreateWindow(width, height, "Return To the Curve", fullscreen ? glfwGetPrimaryMonitor() : nullptr, nullptr);
+	windowHandle = glfwCreateWindow(width, height, "Curve", fullscreen ? glfwGetPrimaryMonitor() : nullptr, nullptr);
 	if (!windowHandle)
 	{
 		glfwTerminate();

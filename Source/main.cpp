@@ -14,6 +14,14 @@
 #include <iostream>
 #include <string>
 
+#ifdef _WIN32
+#include <direct.h>
+#define cd _chdir
+#else
+#include <unistd.h>
+#define cd chdir
+#endif
+
 #include "Camera.h"
 #include "GLSL.h"
 #include "GLTextureWriter.h"
@@ -49,7 +57,7 @@
 #include "gameobjects/Enemy.h"
 #include "gameobjects/Goal.h"
 
-#define RESOURCE_DIRECTORY string("../Resources")
+#define RESOURCE_DIRECTORY string("./resources")
 
 using namespace std;
 using namespace glm;
@@ -901,7 +909,7 @@ public:
 	void mouseCallback(GLFWwindow* window, int button, int action, int mods) {
 		double posX, posY;
 
-		if (action == GLFW_PRESS) {
+		if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_MOUSE_BUTTON_RIGHT) {
 			glfwGetCursorPos(window, &posX, &posY);
 			cout << "Pos X " << posX << " Pos Y " << posY << endl;
 			cout << "" << marble->position.x << ", " << marble->position.y << ", " << marble->position.z << endl;
@@ -917,10 +925,10 @@ public:
 		if (action == GLFW_RELEASE) {
 		}
 
-		if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
+		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
 			camera->freeViewing = true;
 		}
-		if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
+		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
 			camera->freeViewing = false;
 		}
 	}
@@ -941,11 +949,20 @@ public:
 	}
 };
 
+void setDir(string path)
+{
+	size_t found = path.find_last_of("/\\");
+	string dir = path.substr(0, found);
+	cd(dir.c_str());
+}
+
 int main(int argc, char** argv) {
+	setDir(string(argv[0]));
 	Application* application = new Application();
 
 	// Load game
 	application->loadWindow();
+	setDir(string(argv[0]));
 	application->loadCanvas();
 	application->loadShaders();
 	application->loadSkybox();
