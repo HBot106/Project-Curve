@@ -100,7 +100,7 @@ else()
     target_link_libraries(${CMAKE_PROJECT_NAME} ${IRRKLANG_BIN_DIR}/macosx-gcc/libirrklang.dylib)
     add_custom_command (TARGET ${CMAKE_PROJECT_NAME}
       POST_BUILD COMMAND "${CMAKE_INSTALL_NAME_TOOL}"
-          "-change" "/usr/local/lib/libirrklang.dylib" "@executable_path/../irrKlang/bin/macosx-gcc/libirrklang.dylib"
+          "-change" "/usr/local/lib/libirrklang.dylib" "@executable_path/lib/libirrklang.dylib"
       "$<TARGET_FILE:${CMAKE_PROJECT_NAME}>" VERBATIM)
 
   # LINUX

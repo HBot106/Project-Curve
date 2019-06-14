@@ -3,12 +3,12 @@
 Sound::Sound() {
 	sfxEngine = irrklang::createIrrKlangDevice();
 
-	sfxSources.impactSoundSource = sfxEngine->addSoundSourceFromFile("../Resources/sounds/marble_impact.wav", irrklang::ESM_NO_STREAMING, true);
-	sfxSources.resetSoundSource = sfxEngine->addSoundSourceFromFile("../Resources/sounds/marble_reset.wav", irrklang::ESM_NO_STREAMING, true);
-	sfxSources.jumpSoundSource = sfxEngine->addSoundSourceFromFile("../Resources/sounds/marble_jump.wav", irrklang::ESM_NO_STREAMING, true);
-	sfxSources.winSoundSource = sfxEngine->addSoundSourceFromFile("../Resources/sounds/marble_win.wav", irrklang::ESM_NO_STREAMING, true);
-	sfxSources.superBounceSoundSource = sfxEngine->addSoundSourceFromFile("../Resources/sounds/marble_super_bounce.wav", irrklang::ESM_NO_STREAMING, true);
-	sfxSources.fanSoundSource = sfxEngine->addSoundSourceFromFile("../Resources/sounds/fan.wav", irrklang::ESM_AUTO_DETECT, true);
+	sfxSources.impactSoundSource = sfxEngine->addSoundSourceFromFile("./resources/sounds/marble_impact.ogg", irrklang::ESM_NO_STREAMING, true);
+	sfxSources.resetSoundSource = sfxEngine->addSoundSourceFromFile("./resources/sounds/marble_reset.ogg", irrklang::ESM_NO_STREAMING, true);
+	sfxSources.jumpSoundSource = sfxEngine->addSoundSourceFromFile("./resources/sounds/marble_jump.ogg", irrklang::ESM_NO_STREAMING, true);
+	sfxSources.winSoundSource = sfxEngine->addSoundSourceFromFile("./resources/sounds/marble_win.ogg", irrklang::ESM_NO_STREAMING, true);
+	sfxSources.superBounceSoundSource = sfxEngine->addSoundSourceFromFile("./resources/sounds/marble_super_bounce.ogg", irrklang::ESM_NO_STREAMING, true);
+	sfxSources.fanSoundSource = sfxEngine->addSoundSourceFromFile("./resources/sounds/fan.ogg", irrklang::ESM_AUTO_DETECT, true);
 
 	sfxSounds.impactSound = 0;
 	sfxSounds.resetSound = 0;
@@ -20,7 +20,7 @@ Sound::Sound() {
 	// loops over the number of tracks, initializing them and adding them to a vector
 	// double completion = 0.0;
 	for (int i = 1; i < NUMBER_OF_MUSIC_TRACKS + 1; i++) {
-		string file = "../Resources/sounds/music/" + to_string(i) + ".wav";
+		string file = "./resources/sounds/music/" + to_string(i) + ".ogg";
 
 		irrklang::ISoundSource* musicSource = sfxEngine->addSoundSourceFromFile(file.c_str(), irrklang::ESM_AUTO_DETECT);
 		musicSource->setDefaultVolume(0.10f);

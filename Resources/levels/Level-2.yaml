@@ -7,7 +7,7 @@ light:
     intensity: 250000
 marble:
     prefab: Marble
-    location: [-40, 16, 16]
+    location: [-40, 1, 16]
     scale: [1, 1, 1]
     material: lava
     lookDirection: 0
