@@ -10,6 +10,7 @@
 #include <memory>
 #include <glm/glm.hpp>
 #include <vector>
+#include <queue>
 
 #include "../effects/ParticleSpark.h"
 #include "../engine/Material.h"
@@ -20,7 +21,8 @@
 #include "../engine/Time.h"
 #include "../Shape.h"
 #include "../WindowManager.h"
-#include "Enemy.h"
+
+#include "PowerUp.h"
 
 using namespace glm;
 using namespace std;
@@ -37,6 +39,8 @@ public:
     void addSkin(shared_ptr<Material> newSkin);
     void setSkin(int skinIndex);
     void nextSkin();
+    void activatePowerUp();
+    void collectedPowerUp(string type);
     shared_ptr<Material> getSkinMaterial();
 
 	WindowManager *windowManager;
@@ -46,10 +50,13 @@ public:
     float moveForce;
     float jumpForce;
     bool frozen;
+    queue<string> powerups;
     bool initialized;
 
+    float POWER_UP_START_TIME;
     float JUMP_TIME;
     int WANTS_JUMP;
+    float lastPowerupActivationTime = 0;
 
     float LAND_TIME;
     int CAN_JUMP;

@@ -193,7 +193,7 @@ void Camera::init()
     prevTime = glfwGetTime();
     startTimer = 0;
 }
-
+// TODO:: fix to start with a given bezierCurve possibly
 void Camera::startLvlPreview(vec3 lvlCenterPt)
 {
     pathT = 0.01f;

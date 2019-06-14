@@ -76,7 +76,7 @@ public:
 	MaterialManager materialManager = MaterialManager(shared_ptr<SkyboxManager>(&skyboxManager));
 	EmitterManager emitterManager = EmitterManager();
 	PrefabManager prefabManager = PrefabManager(RESOURCE_DIRECTORY + "/prefabs/", shared_ptr<ModelManager>(&modelManager), shared_ptr<MaterialManager>(&materialManager));
-	SceneManager sceneManager = SceneManager(shared_ptr<PrefabManager>(&prefabManager));
+	SceneManager sceneManager = SceneManager(shared_ptr<PrefabManager>(&prefabManager), shared_ptr<MaterialManager>(&materialManager));
 
 	// Game Info Globals
 	bool editMode = false;
@@ -103,8 +103,8 @@ public:
 
 	struct
 	{
-		shared_ptr<Enemy> enemy1;
-		shared_ptr<Enemy> enemy2;
+        shared_ptr<PowerUp> powerUp1;
+        shared_ptr<PowerUp> powerUp2;
 		shared_ptr<Goal> goal;
 		shared_ptr<Blower> blower;
 		shared_ptr<PhysicsObject> beam;
@@ -115,7 +115,8 @@ public:
 	{
 		shared_ptr<UIObject> logo;
 		shared_ptr<UIObject> winMessage;
-		shared_ptr<UIObject> powerUp;
+        shared_ptr<UIObject> springJump;
+        shared_ptr<UIObject> lightningSpeed;
 		shared_ptr<UIObject> Time;
 		shared_ptr<UIObject> Hundreds;
 		shared_ptr<UIObject> Tens;
@@ -305,6 +306,8 @@ public:
 		modelManager.get("goal.obj", true);
 		modelManager.get("quadSphere.obj", true);
 		modelManager.get("cone.obj", true);
+		modelManager.get("Lightning_Speed.obj");
+		modelManager.get("Super_Jump.obj");
 	}
 
 	void loadLevel() {
@@ -358,7 +361,8 @@ public:
 	void loadUIObjects() {
 		uiObjects.logo = make_shared<UIObject>(vec3(-0.78f, 0.78f, 0), vec3(0.4f, 0.4f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("hud/Level" + to_string(preferences.scenes.startup + 1) + ".png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
 		uiObjects.winMessage = make_shared<UIObject>(vec3(0, 0, 0), vec3(0.8f, 0.4f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("hud/YouWin.png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
-		uiObjects.powerUp = make_shared<UIObject>(vec3(0.88, -0.78, 0), vec3(0.2f, 0.4f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("hud/SuperJump.png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
+		uiObjects.springJump = make_shared<UIObject>(vec3(0.88, -0.78, 0), vec3(0.2f, 0.4f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("hud/SpringJump.png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
+		uiObjects.lightningSpeed = make_shared<UIObject>(vec3(0.88, -0.78, 0), vec3(0.2f, 0.4f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("hud/LightningSpeed.png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
 		uiObjects.Time = make_shared<UIObject>(vec3(-0.7f, -0.78f, 0), vec3(0.5f, 0.15f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("hud/Time.png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
 		uiObjects.Hundreds = make_shared<UIObject>(vec3(-0.4f, -0.78f, 0), vec3(0.1f, 0.15f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("hud/numbers/0.png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
 		uiObjects.Tens = make_shared<UIObject>(vec3(-0.3f, -0.78f, 0), vec3(0.1f, 0.15f, 0), quat(1, 1, 1, 1), modelManager.get("billboard.obj"), textureManager.get("hud/numbers/0.png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
@@ -433,9 +437,6 @@ public:
 		// Draw marble
 		if (shader == pbr) marble->getSkinMaterial()->bind();
 		marble->draw(shader, M);
-
-		// Draw enemies
-		if (shader == pbr) materialManager.get("rusted_metal", "jpg")->bind();
 
 		// Draw scene instances
 		int i = 0;
@@ -670,14 +671,17 @@ public:
 
 
 		// Powerup Test
-		// if(hasPowerup){
-			//uiObjects.powerUp->draw(p, M);
-		//}
-    }
+		if (marble->powerups.size() > 0 && marble->powerups.front() == "Super Jump"){
+			uiObjects.springJump->draw(p, M);
+		}
+		if (marble->powerups.size() > 0 && marble->powerups.front() == "Lightning Speed") {
+			uiObjects.lightningSpeed->draw(p, M);
+		}
+	}
 
 	void changeTime() {
 		float curT = Time.timeSinceStart - curTime;
-		int num = curT / 100;
+		int num = (int)(curT / 100);
 		uiObjects.Hundreds->changeImage(textureManager.get("/hud/numbers/" + to_string(num) + ".png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
 		num = (int)fmod(curT, 100.0f) / 10;
 		uiObjects.Tens->changeImage(textureManager.get("/hud/numbers/" + to_string(num) + ".png", 0, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE));
@@ -756,6 +760,7 @@ public:
 		startTime = (float)glfwGetTime();
 		gameObjects.goal->reset();
 		marble->frozen = 0;
+		while (!marble->powerups.empty()) marble->powerups.pop();
 	}
 
 	void beforePhysics() {
@@ -764,15 +769,6 @@ public:
 			gameObjects.blower->update();
 		}
 	}
-
-	// void beforePhysics() {
-	// 	gameObjects.goal->update();
-	// 	if (preferences.scenes.startup == 0) {
-	// 		gameObjects.blower->update();
-	// 		gameObjects.enemy1->update();
-	// 		gameObjects.enemy2->update();
-	// 	}
-	// }
 
 	void physicsTick() {
 		sceneManager.octree.update();
@@ -920,7 +916,7 @@ public:
 			if (editMode) {
 				shared_ptr<Instance> instance = getClickedObject((int)posX, (int)posY);
 				if (instance != nullptr) {
-					instance->physicsObject->position += vec3(0, 1, 0);
+					//instance->physicsObject->position += vec3(0, 1, 0);
 				}
 			}
 		}

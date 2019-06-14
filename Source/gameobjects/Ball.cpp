@@ -1,6 +1,7 @@
 #include "Ball.h"
 
 #include "../Camera.h"
+#include "Enemy.h"
 
 Ball::Ball(vec3 position, quat orientation, shared_ptr<Shape> model, float radius) : PhysicsObject(position, orientation, model, make_shared<ColliderSphere>(radius)), radius(radius)
 {
@@ -44,12 +45,16 @@ void Ball::init(vec3 startPosition, WindowManager *windowManager, shared_ptr<Par
     this->initialized = true;
 }
 
+void Ball::collectedPowerUp(string type)
+{
+    powerups.push(type);
+}
+
 void Ball::update()
 {
     if (!initialized) return;
 
-    if (frozen)
-        return;
+    if (frozen) return;
 
     for (auto collision : collider->pendingCollisions)
     {
@@ -97,7 +102,13 @@ void Ball::update()
         JUMP_TIME = currentTime;
         WANTS_JUMP = 1;
     }
-
+    if (glfwGetKey(windowManager->getHandle(), GLFW_KEY_E) == GLFW_PRESS)
+    {
+        activatePowerUp();
+    }
+    if (glfwGetMouseButton(windowManager->getHandle(), GLFW_MOUSE_BUTTON_1) == GLFW_PRESS) {
+        activatePowerUp();
+    }
     // Any of the three timers expire?
     if (WANTS_JUMP && (currentTime - JUMP_TIME) >= 0.125)
     {
@@ -122,9 +133,20 @@ void Ball::update()
         WANTS_JUMP = 0;
         JUST_JUMPED = 1;
         JUMPED_AT_TIME = currentTime;
-    }
-    //===============================================================================
 
+        if (jumpForce > 150)
+        {
+            soundEngine->superBounce();
+            jumpForce = 150;
+        }
+    }
+    
+    if (moveForce > 200)
+    {
+        if (currentTime - POWER_UP_START_TIME > 3){
+            moveForce = 200;
+        }
+    }
     // calculate forces
     if (direction != vec3(0))
     {
@@ -178,4 +200,22 @@ void Ball::nextSkin()
 shared_ptr<Material> Ball::getSkinMaterial()
 {
     return marbleSkins[currentSkin];
+}
+
+void Ball::activatePowerUp() 
+{
+    if ((float)glfwGetTime() - lastPowerupActivationTime < 1) return;
+
+    lastPowerupActivationTime = (float)glfwGetTime();
+
+    if (powerups.size() > 0 && powerups.front() == "Super Jump") {
+        jumpForce = 500;
+        powerups.pop();
+    }
+    else if (powerups.size() > 0 && powerups.front() == "Lightning Speed")
+    {
+        POWER_UP_START_TIME = (float)glfwGetTime();
+        moveForce = 400;
+        powerups.pop();
+    }
 }
