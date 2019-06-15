@@ -4,8 +4,8 @@ window:
     maximized: true
     fullscreen: true
 shadows:
-    resolution: 2
-    samples: 2
+    resolution: 3
+    samples: 3
 sound:
     music: true
 scenes:

@@ -105,6 +105,7 @@ else()
 
   # LINUX
   else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -no-pie")
     target_link_libraries(${CMAKE_PROJECT_NAME} "GL" "dl")
     target_link_libraries(${CMAKE_PROJECT_NAME} ${IRRKLANG_BIN_DIR}/linux-gcc-64/libIrrKlang.so)
     

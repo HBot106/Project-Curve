@@ -924,10 +924,10 @@ public:
 		if (action == GLFW_RELEASE) {
 		}
 
-		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+		if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
 			camera->freeViewing = true;
 		}
-		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
+		if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
 			camera->freeViewing = false;
 		}
 	}
